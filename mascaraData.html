@@ -1,0 +1,85 @@
+<html>
+<head>
+	<title>Conversor de data:</title>
+	<script language="JavaScript" type="text/javascript"> 
+		//Verificar uma forma menos chamativa de avisar algo na tela do usuário
+		//Como um balão pequeno - Para erros de digitação na data
+
+		//Verificar como acessar e apagar o conteúdo SOMENTE do campo de data
+		//Não o formulário todo, erro com o document.getElementById('data').value="";
+
+		//Função para máscara que insere '/' nos intervalos de dia-mês e mês-ano
+		function conteudoData(conteudoData){   		
+			//Verificar funcionalidades em tipos de navegadores
+			var data = conteudoData.value;
+			
+			//Realiza uma ação ao completar o dia
+			if(data.length === 2){
+				//Verifica se o dia inserido está entre 1 e 31
+				if(conteudoData.value >= 1 && conteudoData.value <= 31){
+					data = data + '/';
+					document.forms[0].data.value = data;
+					return true;
+				}
+				//Retorna um alerta e limpa o campo caso contrário
+				else {
+				 	alert("Erro ao reconhecer o dia inserido.");
+				 	document.forms[0].data.value = "";
+					return false; 
+				}				
+			}
+
+			//Realiza uma ação ao completar o mês
+			if(data.length === 5){
+				//Variável que recebe a concatenação dos dígitos formando o mês
+				var mes = data[3]+""+data[4];
+
+				//Verifica se o mes inserido está entre 1 e 12
+				if(mes >= 1 && mes <= 12){
+					data = data + '/';
+					document.forms[0].data.value = data;
+					return true;
+				}
+				//Retorna um alerta e limpa o campo caso contrário
+				else {
+				 	alert("Erro ao reconhecer o mes inserido.");
+				 	document.forms[0].data.value = "";
+					return false; 
+				}		
+			}
+
+			//Realiza uma ação ao completar o ano
+			if(data.length === 10){
+				//Variável que recebe a concatenação dos dígitos formando o ano
+				var ano = data[6]+""+data[7]+""+data[8]+""+data[9];
+
+				//Verifica se o ano inserido está entre 1850 e 2050
+				if(ano >= 1850 && ano <= 2050){ return true; }
+				//Retorna um alerta e limpa o campo caso contrário
+				else {
+					alert("Erro ao reconhecer o ano inserido.");
+				 	document.forms[0].data.value = "";
+					return false;
+				}
+			}
+		}
+
+		//Função para converter dd/mm/yyyy para yyyy-mm-dd
+		function converteData(dataAtual){   
+			var dataConvertida = dataAtual.value;
+			dataConvertida = dataConvertida.substring(6,10) + '-' + dataConvertida.substring(3,5) + '-' + dataConvertida.substring(0,2);
+			document.write(dataConvertida);
+			return dataConvertida;
+		}
+
+	</script>
+</head>
+<body>
+	<form>
+		<!-- Campo que recebe a data -->
+		<input type=text id="data" OnKeyUp="conteudoData(this);" maxlength="10" placeholder="Exemplo: 10/01/2015" /> 
+		<!-- Botão para conversão da data -->
+		<input type="button" onClick="converteData(data)" value="Enviar">
+	</form>
+</body>
+</html>
