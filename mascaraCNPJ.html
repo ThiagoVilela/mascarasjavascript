@@ -1,0 +1,107 @@
+<html>
+<head>
+	<title>Mascara de CNPJ:</title>
+	<script language="JavaScript" type="text/javascript">
+		//Verificar uma forma menos chamativa de avisar algo na tela do usuário
+		//Como um balão pequeno - Para erros de digitação na data
+
+		//Verificar como acessar e apagar o conteúdo SOMENTE do campo de data
+		//Não o formulário todo, erro com o document.getElementById('data').value="";
+
+		//Função para máscara que insere '.', '/' e '-' nos intervalos do número de CNPJ
+		function mascaraCNPJ(numeroCNPJ){
+			var cnpj = numeroCNPJ.value;
+
+			//Realiza uma ação ao chegar no fim dos primeiros 2 dígitos
+			if(cnpj.length === 2){
+				//Variável que recebe a primeira parte da raiz
+				var raiz1 = cnpj[0]+""+cnpj[1];
+				//Caso a primeira parte da raíz seja composta apenas por números possibilita o caractere '.'
+				if(raiz1 >= 0 && raiz1 <= 99){
+					cnpj = cnpj + ".";
+					document.forms[0].cnpj.value = cnpj;
+					return true;
+				}
+				//Caso contrário exibe uma mensagem de erro
+				else {
+					alert("Erro: Devem ser inseridos apenas numeros na raiz do CNPJ.");
+				 	document.forms[0].cnpj.value = "";
+					return false; 
+				}
+			}
+
+			//Realiza uma ação ao chegar no fim do 6º dígito
+			if(cnpj.length === 6){
+				//Variável que recebe a segunda parte da raiz
+				var raiz2 = cnpj[3] + "" + cnpj[4] + "" + cnpj[5];
+				//Caso a segunda parte da raíz seja composta apenas por números possibilita o caractere '.'
+				if(raiz2 >= 0 && raiz2 <= 999){
+					cnpj = cnpj + ".";
+					document.forms[0].cnpj.value = cnpj;
+					return true;
+				}
+				//Caso contrário exibe uma mensagem de erro
+				else{
+					alert("Erro: Devem ser inseridos apenas numeros na raiz do CNPJ.");
+				 	document.forms[0].cnpj.value = "";
+					return false; 
+				}
+			}
+
+			//Realiza uma ação ao chegar no fim do 10º dígito
+			if(cnpj.length === 10){
+				//Variável que recebe a terceira parte da raiz
+				var raiz3 = cnpj[7]+""+cnpj[8]+""+cnpj[9];
+				//Caso a terceira parte da raíz seja composta apenas por números possibilita o caractere '/'
+				if(raiz3 >= 0 && raiz3<=999){
+					cnpj = cnpj + "/";
+					document.forms[0].cnpj.value = cnpj;
+					return true;
+				}
+				//Caso contrário exibe uma mensagem de erro
+				else{
+					alert("Erro: Devem ser inseridos apenas numeros na raiz do CNPJ.");
+				 	document.forms[0].cnpj.value = "";
+					return false; 
+				}
+			}
+
+			//Realiza uma ação ao chegar no fim do 15º dígito
+			if(cnpj.length === 15){
+				//Variável que recebe o sufixo
+				var sufixo = cnpj[11]+""+cnpj[12]+""+cnpj[13]+""+cnpj[14];
+				//Caso o sufixo seja composto apenas por números possibilita o caractere '.'
+				if(sufixo >= 0 && sufixo <= 9999){
+					cnpj = cnpj + "-";
+					document.forms[0].cnpj.value = cnpj;
+					return true;
+				}
+				//Caso contrário exibe uma mensagem de erro
+				else{
+					alert("Erro: Devem ser inseridos apenas numeros no sufixo do CNPJ.");
+				 	document.forms[0].cnpj.value = "";
+					return false; 
+				}
+			}
+			if(cnpj.length===18){
+				//Variável que recebe o dígito verificador
+				var digitoverificador = cnpj[16]+""+cnpj[17];
+				//Caso o dígito verificador seja composto apenas por números finaliza o CNPJ
+				if(digitoverificador >= 0 && digitoverificador <= 99){ return true; }
+				//Caso contrário exibe uma mensagem de erro
+				else{
+					alert("Erro: Devem ser inseridos apenas numeros no digito verificador do CNPJ.");
+				 	document.forms[0].cnpj.value = "";
+					return false; 
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+	<form>
+		<!-- Campo que recebe o número de CNPJ -->
+		<input type="text" id="cnpj" OnKeyUp="mascaraCNPJ(this);" maxlength="18" placeholder="Exemp.: 12.345.678/9123-00"/>
+	</form>
+</body>
+</html>
